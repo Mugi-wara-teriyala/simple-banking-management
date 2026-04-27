@@ -1,3 +1,5 @@
+import time
+
 def main():
     print("Welcome to the bank!")
     kvb = bank("KVB")
@@ -32,47 +34,66 @@ def main():
                     attempts -= 1
                     print(f"{attempts} attempts left")
         if x==1:
+            time.sleep(0.75)
             print("\nlogin successful!\n")
             while True:
-                choice = int(input("select option:\n    1) deposit\n    2)withdraw\n    3)check account status\n    4)change pin\n    5)exit\n"))
+                time.sleep(0.5)
+                try:
+                    choice = int(input("\nselect option:\n    1) deposit\n    2)withdraw\n    3)check account details\n    4)change pin\n    5)transaction history\n    6)exit\n"))
+                except ValueError:
+                    print("Please enter a valid number for the menu choice.")
+                    continue
+
                 if choice == 1:
                     amount = float(input("enter the amount you like to deposit: "))
                     i.deposit(amount)
+                    time.sleep(0.5)
                     print("amount deposited successfully!")
                 elif choice == 2:
                     amount = float(input("enter the amount you like to withdraw: "))
+                    time.sleep(0.5)
                     i.withdraw(amount)
                 elif choice == 3:
+                    time.sleep(0.5)
                     i.show_details()
                 elif choice == 4:
                     new_pin = input("create a new 4-digit pin:  ")
                     i.pin = new_pin
+                    time.sleep(0.5)
                     print("pin changed successfully!")
                 elif choice == 5:
+                    time.sleep(0.5)
+                    i.show_transaction_history()
+                elif choice == 6:
+                    time.sleep(0.5)
                     print("thank you for banking with us!")
                     break
                 else:
                     print("invalid option, please try again.")
                     
 class customer():
-    num_customers = 0
+    
     def __init__(self,acc_no, name, balance, branch, pin):
         self.acc_no = acc_no
         self.name = name
         self.balance = balance
         self.branch = branch
         self.pin = pin
-        self.num_customers += 1
+        self.transaction_hist = []
+        for ifsc, name in bank.branch.items():
+            if self.branch == name:
+                self.ifsc = ifsc
+                break
     
     def deposit(self, amount):
             self.balance += amount
 
-            self.transaction_history.append(("deposit", amount))
+            self.transaction_hist.append(("deposit", amount))
 
     def withdraw(self, amount):
         if self.balance >= amount:
             self.balance -= amount
-            self.transaction_history.append(("withdraw", amount))
+            self.transaction_hist.append(("withdraw", amount))
         else:
             print("Insufficient balance")
 
@@ -88,14 +109,14 @@ class customer():
         print(f"\nAccount Number: {self.acc_no}")
         print(f"Name    : {self.name}")
         print(f"Branch  : {self.branch}")
+        print(f"IFSC    : {self.ifsc}")
         print(f"Balance : ₹{self.balance:.2f}")
 
     def show_transaction_history(self):
-        pass
-        
-                    
-                    
-                    
+        print("\nTransaction History:")
+        for i in self.transaction_hist:
+            print(f"{i[0].capitalize()} : ₹{i[1]:.2f}")
+
 class bank():
     branch = {"IFSC001": "KVB Main Branch", "IFSC002": "KVB City Branch", "IFSC003": "KVB Sub Branch"}
     def __init__(self, b_name):
@@ -104,23 +125,23 @@ class bank():
         self.customers = {123456: customer(123456, "Alice", 1000, "KVB Main Branch", "1234"),
                           123457: customer(123457, "Bob", 500, "KVB City Branch", "5678")}
         
-        self.transaction_history = []
+        # self.transaction_his = []
         self.num_customers = len(self.customers)
 
     def add_cus(self , customer):
         self.customers[customer.acc_no] = customer
-    def deposit(self, acc_no, amount):
-        for i in self.customers.values():
-            if i.acc_no == acc_no:
-                i.deposit(amount)
-                self.transaction_history.append(("deposit", amount))
-                break
-    def withdraw(self, acc_no, amount):
-        for i in self.customers.values():
-            if i.acc_no == acc_no:
-                i.withdraw(amount)
-                self.transaction_history.append(("withdraw", amount))
-                break
+    # def deposit(self, acc_no, amount):
+    #     for i in self.customers.values():
+    #         if i.acc_no == acc_no:
+    #             i.deposit(amount)
+    #             # i.transaction_his.append(("deposit", amount))
+    #             break
+    # def withdraw(self, acc_no, amount):
+    #     for i in self.customers.values():
+    #         if i.acc_no == acc_no:
+    #             i.withdraw(amount)
+    #             # i.transaction_his.append(("withdraw", amount))
+    #             break
 
     def check_c(self, pin, name):
         
@@ -129,10 +150,11 @@ class bank():
         
         return False
         
-    def transaction_history(self):
-        print("\nTransaction History:")
-        for i in self.transaction_history:
-            print(f"{i[0].capitalize()} : ₹{i[1]:.2f}")
+    #def transaction_history(self):
+        # print("\nTransaction History:")
+        # for i in i.transaction_his:
+        #     print(f"{i[0].capitalize()} : ₹{i[1]:.2f}")
+        d
     
 
 
