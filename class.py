@@ -109,7 +109,7 @@ class customer():
         self.balance = balance
         self.branch = branch
         self.pin = pin
-        # self.transaction_hist = []
+        
         for ifsc, name in bank.branch.items():
             if self.branch == name:
                 self.ifsc = ifsc
