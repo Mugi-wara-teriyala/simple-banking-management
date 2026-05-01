@@ -120,7 +120,7 @@ class customer():
 
             
             c.execute("update customers set balance = ? where acc_no = ?", (self.balance, self.acc_no))
-            c.execute("insert into transaction_history values(?, ?, ?, ?, ?)", (self.acc_no,'Deposite', amount, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S")))
+            c.execute("insert into transaction_history values(?, ?, ?, ?, ?)", (self.acc_no,'Deposit', amount, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S")))
             conn.commit()
     def withdraw(self, amount):
         if self.balance >= amount:
