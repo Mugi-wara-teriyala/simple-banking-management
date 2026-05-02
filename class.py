@@ -72,7 +72,7 @@ def main():
                         baka.show_details()
                     elif choice == 4:
                         new_pin = input("create a new 4-digit pin:  ")
-                        baka.pin = new_pin
+                        kvb.update_pin(baka.acc_no, new_pin)
                         time.sleep(0.5)
                         print("pin changed successfully!")
                     elif choice == 5:
@@ -157,7 +157,7 @@ class customer():
         print(tabulate(row, headers = ['Account Number', 'Type', 'Amount', 'Date', 'Time'], tablefmt = 'rounded_grid'))
 
 class bank():
-    branch = {"IFSC001": "KVB Main Branch", "IFSC002": "KVB City Branch", "IFSC003": "KVB Sub Branch"}
+    branch = {"IFSC001": "KVB Main Branch", "IFSC002": "KVB City Branch", "IFSC003": "KVB Sub Branch", "IFSC004": "KVB German Branch", "IFSC005": "KVB konoha branch"}
 
     c.execute("""CREATE TABLE IF NOT EXISTS customers(
                 acc_no INTEGER PRIMARY KEY,
@@ -192,6 +192,11 @@ class bank():
             return True, yohohoho
         else:
             return False, None
+        
+    def update_pin(self, acc_no, new_pin):
+        c.execute("update customers set pin = ? where acc_no = ?", (new_pin, acc_no))
+        conn.commit()
+        print("pin updated successfully!")
         
     def all_cus(self):
         c.execute("select * from customers")
